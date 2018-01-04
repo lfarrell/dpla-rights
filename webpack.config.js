@@ -1,5 +1,10 @@
 const path = require('path');
 
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const UglifyJsPluginConfig = new UglifyJsPlugin({
+    sourceMap: true
+});
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     template: './src/index.html',
@@ -18,5 +23,8 @@ module.exports = {
             { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ }
         ]
     },
-    plugins: [HtmlWebpackPluginConfig]
+    plugins: [
+        HtmlWebpackPluginConfig,
+        UglifyJsPluginConfig
+    ]
 }
