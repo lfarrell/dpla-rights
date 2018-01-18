@@ -8,7 +8,7 @@ connection.connect();
 const StreamArray = require('stream-json/utils/StreamArray');
 const stream = StreamArray.make();
 
-fs.createReadStream('/Users/lfarrell/Downloads/digitalnc.json').pipe(stream.input);
+fs.createReadStream('/Users/lfarrell/all.json').pipe(stream.input);
 
 let providers = [];
 let hubs = [];
@@ -19,9 +19,8 @@ stream.output.on('data', (object) => {
 
     let record_rights = () => {
         return new Promise((resolve, reject) => {
-            let rights = base.sourceResource.rights;
             let rights_query = 'INSERT INTO licenses SET ?';
-            let right = (Array.isArray(rights)) ? value(rights[0]) : value(rights);
+            let right = value(arrayCheck(base.sourceResource.rights));
 
             if (!licenses.includes(right)) {
                 insertQuery(rights_query, {license: right});
@@ -34,7 +33,7 @@ stream.output.on('data', (object) => {
 
     let provider = (keys) => {
        return new Promise((resolve, reject) => {
-            let record_provider = (base.dataProvider);
+            let record_provider = value(arrayCheck(base.dataProvider));
             if (!providers.includes(record_provider)) {
                 insertQuery('INSERT INTO providers SET ?', {provider: record_provider});
                 providers.push(record_provider);
@@ -47,7 +46,7 @@ stream.output.on('data', (object) => {
     // Hubs
     let hub = (keys) => {
         return new Promise((resolve, reject) => {
-            let record_hub = value(base.provider.name);
+            let record_hub = value(arrayCheck(base.provider.name));
             if (!hubs.includes(record_hub)) {
                 insertQuery('INSERT INTO hubs SET ?', {hub: record_hub});
                 hubs.push(record_hub);
@@ -76,12 +75,17 @@ stream.output.on('data', (object) => {
         .then(record);
 });
 
+const arrayCheck = (field) => {
+    return Array.isArray(field) ? value(field[0]) : value(field) ;
+};
+
 const value = (field) => {
     return (field !== undefined) ? field.trim().replace(/;$/, '') : 'Unknown';
 };
 
 const insertQuery = (query, parameters) => {
     return connection.query(query, parameters, (error, results, fields) => {
+        console.log(results)
         if (error) throw error;
     });
 };
