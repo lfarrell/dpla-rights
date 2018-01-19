@@ -5,6 +5,8 @@
 
 #### Load Generated CSV File into MySQL
 
+From the MySQL command line run:
+
 ~~~~sql
 LOAD DATA LOCAL INFILE 'records.csv' INTO TABLE records 
 FIELDS TERMINATED BY ',' 
