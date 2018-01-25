@@ -2,3 +2,5 @@
 .DS_Store
 node_modules/*
 db.connection.js
+data/*
+json_data/*
