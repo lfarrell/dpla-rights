@@ -1,5 +1,5 @@
 const fs = require('fs');
-const d3 = require('d3');
+const d3 = require('d3-jetpack/build/d3v4+jetpack');
 
 fs.readdir('json_data', (err, files) => {
     files.forEach((file) => {

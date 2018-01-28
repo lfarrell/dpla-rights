@@ -1,5 +1,5 @@
 const fs = require('fs');
-const d3 = require('d3');
+const d3 = require('d3-jetpack/build/d3v4+jetpack');
 
 fs.readdir('data', (err, files) => {
     files.forEach((file) => {
@@ -11,7 +11,7 @@ fs.readdir('data', (err, files) => {
                     d.type = whichType(d.rights);
                 });
 
-                fs.writeFile(`data/${file.split('.')[0]}.json`, JSON.stringify(records, null, '\t'), function(err) {
+                fs.writeFile(`json_data/${file.split('.')[0]}.json`, JSON.stringify(records, null, '\t'), function(err) {
                     console.log(err)
                 });
             });
