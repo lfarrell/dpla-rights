@@ -20,50 +20,67 @@
             border-radius: 8px;
             pointer-events: none;
         }
-
         div {
             margin-left: 25px;
         }
-
         text {
             pointer-events: none;
+            opacity: 0.7;
+            font-size: .8em;
         }
-
         #load {
             font-size: 4em;
         }
-
         h1, h2 {
             width: 100%;
         }
-
         h1 {
             margin: 35px 0;
         }
-
         .hide {
             display: none;
         }
-
         .margin {
             margin-top: 45px;
+        }
+        footer ul {
+            text-align: center;
+        }
+        footer ul li {
+            display: inline;
+            margin-left: 25px;
+            font-size: 1.4em;
         }
     </style>
 </head>
 <body>
-    <div class="ccontainer-fluid">
+    <div class="container-fluid">
         <div id="note">
             <p id="load" class="text-center">Loading ...</p>
         </div>
         <div class="tooltip" style="opacity: 0"></div>
         <div class="col-sm-12 col-md-12 col-lg-12 row hide">
             <h1 class="text-center">Rights statements in the DPLA</h1>
-            <p>The treemap graphic shows the top 575 licenses in the DPLA corpus, divided into four clusters:
+            <p>A few years ago I took a look at the <a target="_blank" href="http://www.deanfarr.com/viz/licenses.php">
+                licenses</a> of records in the Digital Public Libary of America. I thought it might
+            be interesting how things have changed since then, as well as seeing how various hubs contribute to the total.</p>
+
+            <p>Overall, the breakdown of licenses seems to be roughly similar to what it was a few years ago. However, the
+            breakdown of individual hubs show more variance. The three state level hubs shown below
+                the main graphic have a much greater percentage of their records
+            in copyright as opposed to the DPLA as a whole. The DPLA in general, has a solid percentage of records without
+            copyright restrictions, for example the National Archives and Record Administration offers nearly two million
+            records without restrictions.</p>
+
+            <p>The treemap graphics below show licenses with at least 1000 records
+                in the DPLA corpus, and 250 records or more for the state level hubs, divided into four clusters:
                 those in copyright, those with no copyright restrictions, Creative Commons records and those
-                where copyright is unknown, representing licenses that had at least 1000 records associated with them.
-                This was a somewhat arbitrary decision, but showing many more significantly slows down the loading and
-                speed of dynamic features of the graphic. Other records were removed if the rights statement from the record
-                didn't seem to make sense. I think it gives a solid flavor of what's in the DPLA corpus.</p>
+                where copyright is unknown.</p>
+            <p>Overall, I leaned towards considering records in copyright, unless they were explicitly listed with another
+                license. Some records were removed if the rights statement from the record
+                didn't seem to make sense, but in general, I think the graphics give a solid flavor of what's in the DPLA corpus.
+            </p>
+            <p>Note: Hover over a record to see the full text of a particular license.</p>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 row hide">
             <h2 class="text-center">All Hubs</h2>
@@ -71,10 +88,39 @@
             <svg id="all"></svg>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 row hide margin">
+            <h2 class="text-center">Empire State Digital Network</h2>
+            <svg id="esdn"></svg>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 row hide margin">
+            <h2 class="text-center">Mountain West Digital Library</h2>
+            <svg id="mwdl"></svg>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 row hide margin">
             <h2 class="text-center">North Carolina Digital Heritage Center</h2>
-            <div id="nc-legend"></div>
             <svg id="nc"></svg>
         </div>
+        <div class="row hide margin">
+            <div class="col-sm-12 col-lg-12">
+                <footer>
+                    <ul class="list-unstyled" id="link">
+                        <li><a href="/index.php">Other Visualizations</a></li>
+                        <li><a href="/western_water">Western Water</a></li>
+                        <li><a href="mailto:farrelldlfarrell@gmail.com">Email</a></li>
+                        <li><a href="https://twitter.com/farrelldlfarrel">Twitter</a></li>
+                    </ul>
+                </footer>
+            </div>
+        </div>
     </div>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-47256145-1']);
+        _gaq.push(['_trackPageview']);
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
 </body>
 </html>
