@@ -1,4 +1,5 @@
 import * as d3 from 'd3-jetpack/build/d3v4+jetpack';
+import legend from 'd3-svg-legend';
 
 d3.queue()
     .defer(d3.json, 'json_data/final_min/all_counts.json')
@@ -12,9 +13,9 @@ d3.queue()
 
             const color = (value) => {
                 let colorFormat = (coloring) => {
-                    let c = d3.hsl(coloring);
+                    let col = d3.hsl(coloring);
 
-                    return c + "";
+                    return col + "";
                 };
 
                 let color;
@@ -105,57 +106,76 @@ d3.queue()
                     });
             };
 
-            let legend = (selector) => {
-                if (! document.querySelectorAll('.legend').length) {
-                    let keys = [
-                        'Creative Commons',
-                        'No Known Copyright',
-                        'Copyright Unknown',
-                        'In Copyright'
-                    ];
+            let legendOrientation = () => {
+                let size, orientation, legend_height, legend_width;
 
-                    let legend = d3.select(selector)
-                        .append('svg')
-                        .attr('width', width / 2)
-                        .attr('height', 55)
-                        .attr('class', 'legend')
-                        .translate([25, 0]);
-
-                    let j = 0;
-
-                    legend.selectAll('g').data(keys)
-                        .enter()
-                        .append('g').attr('width', 190)
-                        .each(function (d) {
-                            let g = d3.select(this);
-
-                            g.append('rect')
-                                .attr('x', j)
-                                .attr('y', 15)
-                                .attr('width', 10)
-                                .attr('height', 10)
-                                .style('fill', color(d));
-
-                            g.append('text')
-                                .attr('x', j + 15)
-                                .attr('y', 25)
-                                .attr('height', 30)
-                                .attr('width', d.length * 50)
-                                .style('font-size', '0.75em')
-                                .text(d);
-
-                            j += (d.length * 5) + 50;
-                        });
+                if(width < 800) {
+                    size = 40;
+                    orientation = 'vertical';
+                    legend_height = 120;
+                    legend_width = 200;
+                } else {
+                    size = 130;
+                    orientation = 'horizontal';
+                    legend_height = 70;
+                    legend_width = width;
                 }
+
+                return {
+                    size: size,
+                    orientation: orientation,
+                    height: legend_height,
+                    width: legend_width
+                };
             };
 
-            legend('#all-legend');
+            let dpla_legend = (selector) => {
+                let rights = [
+                    'Not in Copyright',
+                    'In Copyright',
+                    'Creative Commons',
+                    'Unknown'
+                    ];
+
+                let colors = [
+                    '#f4a582',
+                    '#d1e5f0',
+                    '#f1b6da',
+                    '#b8e186'
+                ];
+
+                let legend_scales = d3.scaleOrdinal()
+                    .domain(rights)
+                    .range(colors);
+                let configs = legendOrientation();
+
+                let svg = d3.select(selector);
+
+                svg.attr("width", configs.width)
+                    .attr('height', configs.height);
+
+                svg.append("g")
+                    .attr("class", "legend")
+                    .attr("transform", "translate(20,20)");
+
+                let legendz = legend.legendColor()
+                    .shapeWidth(configs.size)
+                    .orient(configs.orientation)
+                    .shapePadding(10)
+                    .scale(legend_scales);
+
+                svg.select(".legend")
+                    .call(legendz);
+            };
+
+            dpla_legend('#all-legend');
             mapped(all, '#all', 700);
             mapped(esdn, '#esdn', 500);
             mapped(mwdl, '#mwdl', 500);
             mapped(nc, '#nc', 500);
 
-            d3.selectAll('.row').classed('hide', false);
+            d3.selectAll('.row, .row hide').classed('hide', false);
+            d3.selectAll('.leg').style('opacity', 1);
             d3.select('#load').classed('hide', true);
         };
 

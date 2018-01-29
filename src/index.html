@@ -40,8 +40,15 @@
         .hide {
             display: none;
         }
+        .opaque {
+            opacity: 0;
+        }
         .margin {
             margin-top: 45px;
+        }
+
+        #note-text {
+            font-weight: bold;
         }
         footer ul {
             text-align: center;
@@ -80,11 +87,14 @@
                 license. Some records were removed if the rights statement from the record
                 didn't seem to make sense, but in general, I think the graphics give a solid flavor of what's in the DPLA corpus.
             </p>
-            <p>Note: Hover over a record to see the full text of a particular license.</p>
+            <p id="note-text">Note: Best viewed on a larger screen On very small screens it's possible that some of the clusters, particularly Creative Commons clusters, will be so
+                small that they won't be visible. Hover over a record to see the full text of a particular license.</p>
         </div>
-        <div class="col-sm-12 col-md-12 col-lg-12 row hide">
+        <div class="col-sm-12 col-md-12 col-lg-12 row" style="width: 100%">
+            <svg id="all-legend" class="leg opaque"></svg>
+        </div>
+        <div class="col-sm-12 col-md-12 col-lg-12 row hide margin">
             <h2 class="text-center">All Hubs</h2>
-            <div id="all-legend"></div>
             <svg id="all"></svg>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12 row hide margin">

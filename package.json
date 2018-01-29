@@ -25,6 +25,7 @@
     "webpack": "^3.10.0"
   },
   "dependencies": {
-    "d3-jetpack": "^2.0.16"
+    "d3-jetpack": "^2.0.16",
+    "d3-svg-legend": "^2.25.4"
   }
 }
